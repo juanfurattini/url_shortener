@@ -1,0 +1,70 @@
+inherit_from: .rubocop_local.yml
+require: rubocop-rspec
+
+AllCops:
+  Exclude:
+    - 'spec/fixtures/**/*'
+    - 'tmp/**/*'
+    - 'db/schema.rb'
+    - 'db/migrate/*'
+    - 'db/seeds.rb'
+  TargetRubyVersion: 2.4.1
+
+Rails:
+  Enabled: true
+
+Metrics/LineLength:
+  Max: 100
+  AllowHeredoc: true
+  AllowURI: true
+  URISchemes:
+    - http
+    - https
+Metrics/MethodLength:
+  Max: 15
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/DateTime:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+Metrics/PerceivedComplexity:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
+
+Bundler/OrderedGems:
+  Enabled: false
+
+Style/WordArray:
+  Enabled: true
+  EnforcedStyle: 'brackets'
+
+Style/SymbolArray:
+  Enabled: true
+  EnforcedStyle: 'brackets'
+
+Style/RaiseArgs:
+  EnforcedStyle: 'compact'
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/RedundantBegin:
+  Enabled: false
+
+Metrics/BlockLength:
+  Enabled: true
+  Exclude:
+    - spec/**/*
+
+Style/NumericLiterals:
+  Enabled: false
+
+Style/RegexpLiteral:
+  EnforcedStyle: 'slashes'

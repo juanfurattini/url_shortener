@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="Rails url_shortener: test" uuid="d70cf842-c0fd-41a0-a994-a759b109cfe0">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>$PROJECT_DIR$/config/database.yml</remarks>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql:url_shortener_test</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="Rails url_shortener: production" uuid="26035341-3f70-4fe2-b9ff-5b999c623dac">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>$PROJECT_DIR$/config/database.yml</remarks>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql:url_shortener_production</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="Rails url_shortener: development" uuid="256ed8e8-a970-4d2b-ba4e-93825914ee56">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>$PROJECT_DIR$/config/database.yml</remarks>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql:url_shortener_development</jdbc-url>
+    </data-source>
+  </component>
+</project>
