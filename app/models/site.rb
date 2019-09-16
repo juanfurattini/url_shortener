@@ -5,7 +5,7 @@ class Site < ApplicationRecord
 
   before_validation :normalize_url
 
-  after_save :generate_shorten_url
+  after_commit :generate_shorten_url
 
   private
 
@@ -14,6 +14,6 @@ class Site < ApplicationRecord
   end
 
   def generate_shorten_url
-    self.shorten_url = ::UniqueIdentifierGenerator.generate_for_id(id: id)
+    update_columns(shorten_url: ::UniqueIdentifierGenerator.generate_for_id(id: id))
   end
 end
