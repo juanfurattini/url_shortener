@@ -1,87 +1,77 @@
 require 'rails_helper'
 
 describe Site, type: :model do
-  let(:valid_url) { 'www.google.com' }
-  let(:invalid_url) { 'some_text' }
+  describe 'Validations' do
+    it { is_expected.to validate_presence_of(:url) }
+    it { is_expected.to allow_value(Faker::Internet.url).for(:url) }
+    it { is_expected.not_to allow_value(Faker::Lorem.word).for(:url) }
+  end
 
-  describe 'url validation' do
-    let(:site) { build(:site, url: url) }
-
+  describe 'url normalization' do
     context 'when a valid url is passed' do
-      let(:url) { valid_url }
-
-      it { expect(site).to be_valid }
+      let(:site) { build(:site) }
 
       it 'must be stripped' do
         site.valid?
-        expect(site.url).to eq url.strip
+        expect(site.url).to eq site.url.strip
       end
     end
 
     context 'when a valid whitespace surrounded url is passed' do
-      let(:url) { " #{valid_url} " }
-
-      before { site.valid? }
-
-      it { expect(site).to be_valid }
+      let(:site) { build(:site, url: " #{Faker::Internet.url} ") }
 
       it 'must be stripped' do
         site.valid?
-        expect(site.url).to eq url.strip
+        expect(site.url).to eq site.url.strip
       end
     end
 
     context 'when an invalid url is passed' do
-      let(:url) { invalid_url }
-
-      it { expect(site).not_to be_valid }
+      let(:site) { build(:site, url: Faker::Lorem.word) }
 
       it 'must be stripped' do
         site.valid?
-        expect(site.url).to eq url.strip
+        expect(site.url).to eq site.url.strip
       end
     end
 
     context 'when an invalid whitespace surrounded url is passed' do
-      let(:url) { " #{invalid_url} " }
-
-      it { expect(site).not_to be_valid }
+      let(:site) { build(:site, url: " #{Faker::Lorem.word} ") }
 
       it 'must be stripped' do
         site.valid?
-        expect(site.url).to eq url.strip
+        expect(site.url).to eq site.url.strip
       end
     end
   end
 
   describe 'shorten_url generation' do
     context 'when a valid url is passed' do
-      let(:url) { valid_url }
-      let(:site) { create(:site, url: url) }
+      let(:site) { build(:site) }
       let(:expected_shorten_url) do
         UniqueIdentifierGenerator.generate_for_id(id: site.id)
       end
 
-      before do
-        expect(UniqueIdentifierGenerator)
-          .to receive(:generate_for_id)
-          .with(id: site.id).and_call_original
-          .once
+      it 'must call the UniqueIdentifierGenerator' do
+        expect(UniqueIdentifierGenerator).to receive(:generate_for_id).and_call_original.once
+        site.save
       end
 
-      it { expect(site.shorten_url).to eq expected_shorten_url }
+      it 'must generate the shorten url' do
+        site.save
+        expect(site.shorten_url).to eq expected_shorten_url
+      end
     end
 
     context 'when an invalid url is passed' do
-      let(:url) { invalid_url }
-      let(:site) { build(:site, url: url) }
+      let(:site) { build(:site, url: Faker::Lorem.word) }
 
-      before do
-        expect(UniqueIdentifierGenerator)
-          .not_to receive(:generate_for_id)
+      it 'must not call the UniqueIdentifierGenerator' do
+        expect(UniqueIdentifierGenerator).not_to receive(:generate_for_id)
+        site.save
       end
 
-      it do
+      it 'must not generate the shorten url' do
         site.save
         expect(site.shorten_url).to be nil
       end

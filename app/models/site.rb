@@ -10,7 +10,7 @@ class Site < ApplicationRecord
   private
 
   def normalize_url
-    url.strip!
+    url&.strip!
   end
 
   def generate_shorten_url
